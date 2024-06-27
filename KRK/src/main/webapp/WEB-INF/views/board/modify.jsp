@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-이렇게?
+
 </body>
 </html>
