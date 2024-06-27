@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.spring5legacy.KRK.domain.YourBoardVO;
 
-public interface YourBoardMapperIm {
+public interface YourBoardMapper {
     //게시물 조회 - 목록
     public List<YourBoardVO> selectYourBoardList();
 	
