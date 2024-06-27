@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+
+	<!-- jdbc.properties 설정-->
+	<context:property-placeholder location="classpath:jdbc_properties/jdbc.properties"/>
+	
+	<!-- HikariConfig 빈설정 -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName" value="${myuser.oracle.jdbc.hikari.driverClassName}" />
+		<property name="jdbcUrl" value="${myuser.oracle.jdbc.hikari.jdbcUrl}"/>
+		<property name="username" value="${myuser.oracle.jdbc.hikari.username}"/>
+		<property name="password" value="${myuser.oracle.jdbc.hikari.password}" />
+	</bean>
+
+	<!-- HikariDateSource 빈설정 -->
+	<bean class="com.zaxxer.hikari.HikariDataSource" id="dataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig"></constructor-arg>
+	</bean>
+
+	<!-- Mybatis, DB 연결 (mapper와 db연결설정) -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="mapperLocations">
+			<list>
+			 	<value>classpath:mappers/MyBoardMapper.xml</value>
+			</list>
+   		</property>
+	</bean>
+	
+	<!-- SqlSessionTemplate 빈 설정 -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory"/>
+	</bean>
+	
+	<!-- 메퍼 인터페이스 위치 설정 -->
+	<mybatis-spring:scan base-package="com.spring5legacy.mypro00.mapper" template-ref="sqlSession"/>
+	
+	<!-- 스프링 트랜잭션 빈 설정 -->
+	<!-- dataSource 빈을 주입받아야 하므로, dataSource 빈이 설정된 스프링 빈 구성 설정 파일에 빈 정의를 추가 -->
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- 스프링 트랜잭션 기능 활성화(@Transaction 어노테이션 기능을 활성화) DataSourceTransactionManager 빈 사용 -->
+	<tx:annotation-driven transaction-manager="txManager"/>
+	
+</beans>
