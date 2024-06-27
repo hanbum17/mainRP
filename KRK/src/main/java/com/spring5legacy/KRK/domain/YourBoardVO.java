@@ -15,7 +15,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class YourBoardVO {
-	private long BNO ;
+	private Long BNO ;
 	private String BTITLE ;
 	private String BCONTENT ;
 	private String BWRITER ;
@@ -24,8 +24,8 @@ public class YourBoardVO {
 	private Integer BVIEWSCNT ;
 	private Integer BREPLYCNT ;
 	private Integer BDELFLAG ;
-	private long BRECOMMEND ;
-	private long BTYPE ;
+	private Long BRECOMMEND ;
+	private Long BTYPE ;
 	
 	
 	

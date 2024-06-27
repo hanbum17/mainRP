@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- MyBatis가 사용할 xml -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring5legacy.KRK.mapper.YourBoardMapper">
+
+<!-- 게시물 조회 - 목록 -->
+    <select id="selectYourBoardList" resultType="com.spring5legacy.KRK.domain.YourBoardVO">
+        SELECT BNO, BTITLE, BCONTENT, BWRITER, BREGDATE, BMODDATE, BVIEWSCNT, BREPLYCNT, BDELFLAG, BRECOMMEND, BTYPE
+        FROM KRK.tbl_yourboard
+        ORDER BY BNO DESC
+    </select>
+
+<!-- 게시물 등록 -->
+    <insert id="insertYourBoard">
+        <selectKey keyProperty="BNO" order="BEFORE" resultType="Long">
+            SELECT krk.seq_yourboard.nextval FROM dual
+        </selectKey>
+        
+        INSERT INTO KRK.tbl_yourboard
+        VALUES (#{BNO},	#{BTITLE}, #{BCONTENT}, #{BWRITER}, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT,DEFAULT, DEFAULT)
+    </insert>
+
+
+<!-- 게시물 조회  -->
+    <select id="selectYourBoard" resultType="com.spring5legacy.KRK.domain.YourBoardVO">
+        SELECT BNO, BTITLE, BCONTENT, BWRITER, BREGDATE, BMODDATE, BVIEWSCNT, BREPLYCNT, BDELFLAG, BRECOMMEND, BTYPE 
+        FROM krk.tbl_yourboard 
+        WHERE BNO = #{BNO}
+    </select>
+
+<!-- 게시물 수정 -->
+    <update id="updateYourBoard">
+        UPDATE myuser.tbl_myboard
+        SET BTITLE = #{BTITLE},
+            BCONTENT = #{BCONTENT},
+            BMODDATE = DEFAULT
+        WHERE BNO = #{BNO}
+    </update>
+
+<!-- 게시물 블라인드 처리 -->
+    <update id="updateBdelFlag">
+        UPDATE krk.tbl_yourboard SET BDELFLAG = 1 WHERE BNO = #{BNO}
+    </update>
+
+<!-- 게시물 삭제-->
+    <delete id="deleteYourBoard">
+        DELETE myuser.tbl_yourboard WHERE BNO = #{BNO}
+    </delete>
+
+<!-- 게시물 조회수 증가 -->	
+    <update id="updateBviewsCnt">
+        UPDATE krk.tbl_yourboard
+        SET BVIEWSCNT = BVIEWSCNT + 1
+        WHERE BNO = #{BNO}
+    </update>
+
+</mapper>

@@ -4,12 +4,12 @@ import java.util.List;
 
 import com.spring5legacy.KRK.domain.YourBoardVO;
 
-public interface YourBoardMapper {
+public interface YourBoardMapperIm {
     //게시물 조회 - 목록
     public List<YourBoardVO> selectYourBoardList();
 	
     //게시물 등록
-    public Integer insertMyBoard(YourBoardVO yourBoard);
+    public Integer insertYourBoard(YourBoardVO yourBoard);
 	
     //게시물 조회 
     public YourBoardVO selectYourBoard(Long BNO);
@@ -20,7 +20,7 @@ public interface YourBoardMapper {
 //                               	@Param("BTITLE") String btitle,
 //                               	@Param("BCONTENT") String bcontent );
 
-    //게시물 블라인드처리
+    //게시물 블라인드 처리
     public int updateBdelFlag(Long BNO);
 	
     //게시물 삭제
