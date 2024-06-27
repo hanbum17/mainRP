@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
+<!-- <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:context="http://www.springframework.org/schema/context"
     xsi:schemaLocation="http://www.springframework.org/schema/beans 
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context 
-        http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+        http://www.springframework.org/schema/context/spring-context-4.3.xsd"> -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+        
 
 <!-- Connection Pool 관련 Bean 구성: HikariCP -->
 
@@ -24,5 +34,21 @@
     <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
         <constructor-arg ref="hikariConfig" />
 	   </bean>
+	   
+<!-- SqlSessionFactoryBean 빈 설정: HikariCP 풀의 Connection 객체(dataSource 빈)를 주입 받음 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" /><!-- 
+        <property name="configLocation" value="classpath:mappers/MybatisConfig.xml"/> -->
+        <property name="mapperLocations">
+            <list><!-- 여러 경로에 매퍼파일이 존재할 경우, list 요소 사용 -->
+                <value>classpath:mappers/YourBoardMapper.xml</value>
+            </list>
+        </property><!-- 
+        <property name="mapperLocations" value="classpath:mappers/**/*.xml" /> -->
+    </bean> 
+    
+<!-- 매퍼인터페이스 패키지 설정, DAO 클래스를 사용하는 경우에는 설정하지 않습니다. -->
+    <mybatis-spring:scan base-package="com.spring5legacy.mypro00.mapper"/>
+	   
 
 </beans>
