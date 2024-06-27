@@ -5,7 +5,7 @@
 <!-- 게시물 조회 - 목록 -->
     <select id="selectYourBoardList" resultType="com.spring5legacy.KRK.domain.YourBoardVO">
         SELECT BNO, BTITLE, BCONTENT, BWRITER, BREGDATE, BMODDATE, BVIEWSCNT, BREPLYCNT, BDELFLAG, BRECOMMEND, BTYPE
-        FROM KRK.tbl_yourboard
+        FROM krk.tbl_yourboard
         ORDER BY BNO DESC
     </select>
 
@@ -15,7 +15,7 @@
             SELECT krk.seq_yourboard.nextval FROM dual
         </selectKey>
         
-        INSERT INTO KRK.tbl_yourboard
+        INSERT INTO krk.tbl_yourboard
         VALUES (#{BNO},	#{BTITLE}, #{BCONTENT}, #{BWRITER}, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT,DEFAULT, DEFAULT)
     </insert>
 
@@ -29,7 +29,7 @@
 
 <!-- 게시물 수정 -->
     <update id="updateYourBoard">
-        UPDATE myuser.tbl_myboard
+        UPDATE krk.tbl_yourboard
         SET BTITLE = #{BTITLE},
             BCONTENT = #{BCONTENT},
             BMODDATE = DEFAULT
