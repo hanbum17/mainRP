@@ -55,7 +55,7 @@ public class YourBoardController {
         return "redirect:/yourboard/list"; 
     }
 
-  //특정 게시물 조회 페이지 호출: 목록 -> 상세, 수정 후 -> 상세 
+  //게시물 조회 페이지 호출: 목록 > 상세
     @GetMapping({"/detail"})
     public void showBoardDetail(@RequestParam("BNO") long BNO, String from, Model model) {
         log.info("컨트롤러 - 게시물 조회-수정 페이지 호출: "+ BNO);
@@ -69,7 +69,7 @@ public class YourBoardController {
     }
 
 
-    //특정 게시물 조회 > 수정 페이지 호출(새로추가)
+    //게시물 조회 > 수정 페이지 호출
     @GetMapping({"/modify"})
     public void showBoardModify(@RequestParam("BNO") long BNO, Model model) {
         log.info("컨트롤러 - 게시물 수정 페이지 호출: "+ BNO);
@@ -79,7 +79,7 @@ public class YourBoardController {
     }
 
 
-    //특정 게시물 수정 처리(수정)
+    //게시물 수정 처리(수정)
     @PostMapping("/modify")
     public String modifyBoard(YourBoardVO yourBoard, RedirectAttributes redirectAttr){ 
         log.info("컨트롤러 - 게시물 수정 전달된 yourBoard 값: " + yourBoard);
