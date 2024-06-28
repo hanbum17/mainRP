@@ -2,6 +2,8 @@ package com.spring5legacy.KRK.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.spring5legacy.KRK.domain.YourBoardVO;
 
 public interface YourBoardMapper {
@@ -16,9 +18,9 @@ public interface YourBoardMapper {
 
     //게시물 수정
     public int updateYourBoard(YourBoardVO yourBoard); 
-//    public int updateYourBoard(@Param("BNO") Long bno,
-//                               	@Param("BTITLE") String btitle,
-//                               	@Param("BCONTENT") String bcontent );
+    public int updateYourBoard(@Param("BNO") Long bno,
+                               @Param("BTITLE") String btitle,
+                               @Param("BCONTENT") String bcontent );
 
     //게시물 블라인드 처리
     public int updateBdelFlag(Long BNO);
