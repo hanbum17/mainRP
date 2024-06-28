@@ -33,14 +33,23 @@ public class YourBoardServiceImpl implements YourBoardService{
 	      		return yourBoard.getBNO();
 	   	}
 
-	   	//게시물 조회 서비스: 조회수 증가 고려
-	    @Override
+	   	//게시물 조회 서비스1
+	  	@Override
 	    public YourBoardVO getBoard(Long BNO) {
 	      		System.out.println("게시물 조회 메서드에 전달된 BNO: " + BNO);
-	      		YourBoardVO yourBoard = yourBoardMapper.selectYourBoard(BNO) ;
+	      		
 	      		yourBoardMapper.updateBviewsCnt(BNO);
-	      		return yourBoard;
+	      		return yourBoardMapper.selectYourBoard(BNO);
 	    }
+	  	
+	    //게시물 조회 서비스2
+	    @Override
+	    public YourBoardVO getBoardModify(Long BNO) {
+	      		System.out.println("조회->수정페이지이동 시 전달된  BNO: " + BNO);
+	      	
+	      		return yourBoardMapper.selectYourBoard(BNO);
+	    }
+	    
 
 		//게시물 수정 서비스
 	   	@Override
